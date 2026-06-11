@@ -181,6 +181,7 @@ let currentStep = 0;
 function render() {
   const container = document.getElementById('survey');
   const step = STEPS[currentStep];
+  if (step.final) { showFinal(); return; }
   const totalSteps = 4; // pretend there are only a few steps
   const pct = Math.min(((history.length) / totalSteps) * 100, 95);
   document.getElementById('progress').style.width = pct + '%';
