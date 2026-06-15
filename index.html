@@ -11,7 +11,7 @@
 <style>
 :root{--bg:#0d1117;--surface:#161b22;--surface-hi:#1c2129;--border:#30363d;--text:#c9d1d9;--text-dim:#8b949e;--primary:#a1faff;--green:#3fb950;--accent:#58a6ff}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center}
 
 .survey-container{max-width:600px;width:100%;padding:24px;position:relative}
 
@@ -30,12 +30,12 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 .option-btn .option-icon{font-size:1.3rem;flex-shrink:0}
 
 /* Progress bar */
-.progress-bar{position:fixed;bottom:0;left:0;width:100%;height:4px;background:var(--surface)}
+.progress-bar{position:fixed;bottom:0;left:0;width:100%;height:4px;background:var(--surface);pointer-events:none}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--green));transition:width .5s ease;border-radius:0 2px 2px 0}
 
 /* Footer nav */
-.nav-bar{position:fixed;bottom:4px;left:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 24px}
-.nav-btn{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 20px;font-family:inherit;font-size:0.85rem;font-weight:600;color:var(--text-dim);cursor:pointer;transition:all .15s}
+.nav-bar{position:fixed;bottom:4px;left:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 24px;pointer-events:none}
+.nav-btn{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 20px;font-family:inherit;font-size:0.85rem;font-weight:600;color:var(--text-dim);cursor:pointer;transition:all .15s;pointer-events:auto}
 .nav-btn:hover{border-color:var(--primary);color:var(--text)}
 .nav-hint{font-size:0.78rem;color:var(--text-dim)}
 
@@ -46,7 +46,7 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 .final p{color:var(--text-dim);font-size:1.05rem;margin-bottom:24px;line-height:1.6}
 .buy-btn{display:inline-block;background:linear-gradient(135deg,var(--primary),var(--green));color:#0d1117;font-family:inherit;font-size:1.1rem;font-weight:700;padding:16px 48px;border-radius:14px;border:none;cursor:pointer;text-decoration:none;transition:all .2s;box-shadow:0 0 30px rgba(161,250,255,.2)}
 .buy-btn:hover{transform:scale(1.05);box-shadow:0 0 40px rgba(161,250,255,.35)}
-.restart-link{display:inline-block;margin-top:16px;color:var(--text-dim);font-size:0.85rem;cursor:pointer;text-decoration:underline}
+.restart-link{display:inline-block;margin-top:16px;color:var(--text-dim);font-size:0.85rem;cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit}
 .restart-link:hover{color:var(--text)}
 
 /* Fade transition */
@@ -240,7 +240,7 @@ function showFinal() {
       <p style="font-size:1.3rem;color:var(--primary);font-weight:700;margin-bottom:28px">Buy WICK on PulseChain.</p>
       <a href="https://swap.wick.pics" target="_blank" class="buy-btn">BUY WICK NOW &#128640;</a>
       <br>
-      <span class="restart-link" onclick="restart()">Retake survey (same result)</span>
+      <button type="button" class="restart-link" onclick="restart()">Retake survey</button>
     </div>
   `;
 
