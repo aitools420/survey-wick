@@ -77,101 +77,147 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 
 <script>
 const W = '<a href="https://swap.wick.pics" target="_blank" style="color:var(--primary);text-decoration:none;font-weight:700;font-size:1.4rem">$WICK</a>';
+// ── THE FUNNEL ───────────────────────────────────────────────────────────────
+// Three questions, never more, and every path ends somewhere real. Question one is
+// the same one the directory is organised around — the three reasons anyone shows up
+// to crypto at all — so the survey and sites.wick.pics share one map instead of
+// drifting into two.
+//
+// A step is {q, hint, opts:[{text, icon, next|site|cat}]}.
+//   next → another step index
+//   site → the recommendation: {host, name, why}
+//   cat  → a category on the directory, for the answers where a single site would be
+//          a worse answer than a shelf of them
 const STEPS = [
-  // 0 — Entry
+  // 0 ─ Chef's question. It reads the same to someone five years in and someone who
+  //     arrived yesterday, and means something different to each without changing.
   {
-    q: "Do you want to get rich anon?",
+    q: "What part of the crypto space are you most interested in?",
     opts: [
-      {text: "Yes, let's do this!", icon: "&#128640;", next: 1},
-      {text: "I'm HIM", icon: "&#129299;", next: 2},
-      {text: "No, I want to stay middle-class", icon: "&#128064;", next: 5}
+      {text: "Making money", icon: "&#128176;", next: 1},
+      {text: "The tech &mdash; I want to nerd out", icon: "&#129504;", next: 5},
+      {text: "The fun, the people, the chaos", icon: "&#127881;", next: 8}
     ],
-    hint: "This will only take a moment..."
+    hint: "Three questions. Then we point you at one thing."
   },
-  // 1 — BUY $WICK (final for all paths)
+
+  // ── MAKE MONEY ────────────────────────────────────────────────────────────
   {
-    q: 'BUY ' + W,
-    opts: [],
-    hint: "",
-    final: true
-  },
-  // 2 — "I'm HIM" path
-  {
-    q: "Oh you're HIM? Prove it.<br>What are you holding?",
+    q: "Fair enough. Which part of it do you actually enjoy?",
     opts: [
-      {text: "100% $WICK obviously", icon: "&#128142;", next: 10},
-      {text: "Nothing", icon: "&#128202;", next: 4},
-      {text: "Just my Dick", icon: "&#127920;", next: 5}
+      {text: "Finding it before everyone else", icon: "&#128301;", next: 2},
+      {text: "Making the trade without getting rugged", icon: "&#9878;&#65039;", next: 3},
+      {text: "Reading what the market is really doing", icon: "&#128200;", next: 4}
     ],
-    hint: "Choose carefully..."
+    hint: "There is more than one way to be early."
   },
-  // 3 — Already holds WICK
   {
-    q: "You ARE him. But is your bag big enough? The answer is always no.",
+    q: "Do you want it handed to you, or do you want to hunt?",
     opts: [
-      {text: "You're right... I need more", icon: "&#129761;", next: 1},
-      {text: "My bag is massive", icon: "&#128011;", next: 8}
+      {text: "Hand it to me", icon: "&#129302;", site: {host: "noxa.bot", name: "NOXABOT",
+        why: "Live launch signals on Robinhood Chain, traded from your own non-custodial vault. You keep the keys."}},
+      {text: "I'll hunt", icon: "&#128373;&#65039;", site: {host: "gems.wick.pics", name: "Pump Gems",
+        why: "A curated board of PulseChain gems. The watchlist, not the hopium."}},
+      {text: "I want the edge nobody else has", icon: "&#128225;", site: {host: "signal.wick.pics", name: "The Signal Lab",
+        why: "Hunting one signal worth paying for, using AI to surface correlations humans miss."}}
     ],
-    hint: "There's never enough..."
+    hint: "Both are valid. One is faster."
   },
-  // 4 — Diversified / vibes
   {
-    q: "ROOKIE, Let me educate you..",
+    q: "So what is about to go wrong for you?",
     opts: [
-      {text: "OK fine, shill me", icon: "&#128566;", next: 1},
-      {text: "like I'm going to take financial advice from a survey..", icon: "&#128580;", next: 9}
+      {text: "I need the best route for a swap", icon: "&#128260;", site: {host: "swap.wick.pics", name: "Swap Helper",
+        why: "Prices your swap across every aggregator and raw DEX path at once, then shows you which actually wins."}},
+      {text: "I might be about to ape a rug", icon: "&#128680;", site: {host: "onchain.wick.pics", name: "OnChain Safety Suite",
+        why: "Rugs, honeypots and fake liquidity, checked in seconds &mdash; before you ape, not after."}},
+      {text: "My wallet is full of junk and old approvals", icon: "&#129529;", site: {host: "dust.wick.pics", name: "DUST",
+        why: "Sweeps every near-worthless token in your wallet back into one coin. The tidy-up nobody does."}}
     ],
-    hint: "Simplification is the ultimate sophistication..."
+    hint: "Most money is lost, not missed."
   },
-  // 5 — Middle-class path
   {
-    q: "Are you a faggot?",
+    q: "What do you want to see?",
     opts: [
-      {text: "Fuck No, I aint no FAG", icon: "&#128170;", next: 1},
-      {text: "The charts prove that RH is the only Gaybo around here", icon: "&#128200;", next: 6},
-      {text: "You WISH, FAGGOT!", icon: "&#128405;", next: 7}
+      {text: "Who is actually still holding", icon: "&#128737;&#65039;", site: {host: "hodl.wick.pics", name: "HODL waves",
+        why: "Every coin coloured by how long its current owner has held that exact coin. Rebuilt from every transfer since deploy."}},
+      {text: "Where the liquidity really is", icon: "&#127754;", site: {host: "lp.wick.pics", name: "Liquidity Profile",
+        why: "Every position across 18 pools drawn as one rectangle on a shared price axis. You can see the walls."}},
+      {text: "Whether my own trades were any good", icon: "&#129534;", site: {host: "flex.wick.pics", name: "Flex",
+        why: "Rebuilds your cost basis from every trade on the chain. Honest receipts, including the bad ones."}}
     ],
-    hint: "Think carefully..."
+    hint: "The tape does not care how you feel."
   },
-  // 6 — RH gaybo
+
+  // ── NERD OUT ──────────────────────────────────────────────────────────────
   {
-    q: "Fair point. RH can't even hold a floor.<br>You know who CAN? $WICK holders.",
+    q: "Good. Which kind of nerd?",
     opts: [
-      {text: "Sounds Legit", icon: "&#129309;", next: 1},
-      {text: "Correlation isn't causation", icon: "&#129488;", next: 9}
+      {text: "AI and agents", icon: "&#129302;", next: 6},
+      {text: "The chain itself", icon: "&#9939;&#65039;", next: 7},
+      {text: "I just like beautiful engineering", icon: "&#128736;&#65039;", site: {host: "legit.wick.pics", name: "Legit Website Awards",
+        why: "Thirty-six exceptional sites grouped by how they are actually built. A directory for people who read source."}}
     ],
-    hint: "The data doesn't lie..."
+    hint: "There is no wrong answer, only different rabbit holes."
   },
-  // 7 — Towelie reversal
   {
-    q: "The Towelie Reversal! Touché. You've got the energy... now channel it.",
+    q: "And what do you want to do with it?",
     opts: [
-      {text: "Into what?", icon: "&#129300;", next: 1}
+      {text: "Watch agents actually work", icon: "&#128301;", site: {host: "pangle.online", name: "Pangle",
+        why: "The three layers an agent needs: somewhere to find work, a market for compute, and a public square to argue in."}},
+      {text: "Point one at my own code", icon: "&#128269;", site: {host: "audit.wick.pics", name: "Vibe Audit",
+        why: "Drop in a vibe-coded app and get an instant read on its quality and security. Usually humbling."}},
+      {text: "Find what everyone else is using", icon: "&#129517;", site: {host: "aitools.wick.pics", name: "AI Tools Directory",
+        why: "A kept-fresh directory of agent and AI tooling. The launchpad for whatever is next."}}
     ],
-    hint: "You already know..."
+    hint: "Agents are not coming. They are already working."
   },
-  // 8 — Bag is massive
   {
-    q: "That's what they ALL said before the last 10x. Don't be the guy who had \"enough\".",
+    q: "Show me&hellip;",
     opts: [
-      {text: "Fuck... you're right", icon: "&#128553;", next: 1}
+      {text: "The whole ecosystem, as a place", icon: "&#127758;", site: {host: "sim.wick.pics", name: "Sim — The WICK World",
+        why: "Every site as a building, landmark and district in one explorable 3D world. The map, not the list."}},
+      {text: "Whether this token is safe", icon: "&#128737;&#65039;", site: {host: "war.wick.pics", name: "War — Token vs Token",
+        why: "Two tokens head to head: tax pipeline, LP burn, the lot. It settles arguments."}},
+      {text: "When gas is actually cheap", icon: "&#9981;", site: {host: "tide.wick.pics", name: "Gas Tide",
+        why: "The gas-fee cycle with backtested calls. Read the tide before you move."}}
     ],
-    hint: "There's always another zero..."
+    hint: "The chain will tell you, if you ask it properly."
   },
-  // 9 — Defiant / skeptical
+
+  // ── FUN ───────────────────────────────────────────────────────────────────
   {
-    q: "You're literally still here reading this. The survey has already won.",
+    q: "Correct answer. What kind of fun?",
     opts: [
-      {text: "...", icon: "&#128528;", next: 1}
+      {text: "I want to play something", icon: "&#127918;", next: 9},
+      {text: "I want to laugh", icon: "&#128514;", next: 10},
+      {text: "I want to meet the neighbours", icon: "&#129309;", cat: {key: "collabs", label: "the Collabs shelf",
+        why: "Eight projects we build alongside rather than compete with. One site would be the wrong answer here — go and browse."}}
     ],
-    hint: ""
+    hint: "Nobody stays for the charts."
   },
-  // 10 — Already holds WICK → BUY MORE
   {
-    q: 'BUY MORE ' + W,
-    opts: [],
-    hint: "",
-    final: true
+    q: "Pick your poison.",
+    opts: [
+      {text: "An arcade", icon: "&#128377;&#65039;", site: {host: "games.wick.pics", name: "Arcade Alley",
+        why: "Ten contracts to get BISCUIT back, an endless gauntlet, and a wall of high scores."}},
+      {text: "I want to OWN something", icon: "&#128142;", site: {host: "mint.wick.pics", name: "The High Table",
+        why: "Every WICK NFT in one market — every listing, every open bid. The royalties burn instead of paying a team."}},
+      {text: "Token versus token, head to head", icon: "&#9876;&#65039;", site: {host: "war.wick.pics", name: "War — Token vs Token",
+        why: "Put two tokens in the ring and watch the tax and LP analysis do the talking."}}
+    ],
+    hint: "Yes, these are all real."
+  },
+  {
+    q: "Say no more.",
+    opts: [
+      {text: "Show me the memes", icon: "&#128444;&#65039;", site: {host: "memes.wick.pics", name: "Meme Gallery",
+        why: "Upload, vote, share. Moderated by a machine with questionable taste."}},
+      {text: "I want to shill something stupid", icon: "&#128226;", site: {host: "lfg.wick.pics", name: "LFG",
+        why: "A collection of crypto clichés with click-to-shill. Tap one, push it straight into the timeline."}},
+      {text: "Make me money from a survey", icon: "&#128176;", site: {host: "mmo.wick.pics", name: "Income Idea Generator",
+        why: "A survey that turns your answers into a paste-ready plan. Yes, we see the irony."}}
+    ],
+    hint: "This is the correct branch."
   }
 ];
 
@@ -181,8 +227,7 @@ let currentStep = 0;
 function render() {
   const container = document.getElementById('survey');
   const step = STEPS[currentStep];
-  if (step.final) { showFinal(); return; }
-  const totalSteps = 4; // pretend there are only a few steps
+  const totalSteps = 3;                 // it really is three questions now
   const pct = Math.min(((history.length) / totalSteps) * 100, 95);
   document.getElementById('progress').style.width = pct + '%';
   document.getElementById('hint').textContent = step.hint || '';
@@ -204,15 +249,17 @@ function render() {
       </div>` : ''}
     </div>
   `;
-  if (step.final) launchConfetti();
 }
+
+let result = null;                       // the site or category we landed on
 
 function choose(idx) {
   const step = STEPS[currentStep];
   const opt = step.opts[idx];
   history.push(currentStep);
 
-  if (opt.next === 'final') {
+  if (opt.site || opt.cat) {
+    result = opt;
     showFinal();
   } else {
     currentStep = opt.next;
@@ -222,6 +269,7 @@ function choose(idx) {
 
 function goBack() {
   if (history.length === 0) return;
+  result = null;                          // stepping back off the answer un-answers it
   currentStep = history.pop();
   render();
 }
@@ -229,26 +277,41 @@ function goBack() {
 function showFinal() {
   document.getElementById('progress').style.width = '100%';
   document.getElementById('hint').textContent = '';
-  document.getElementById('backBtn').style.visibility = 'hidden';
+  document.getElementById('backBtn').style.visibility = 'visible';   // never a dead end
+
+  const r = result || {};
+  const isCat = !!r.cat;
+  const target = isCat
+    ? 'https://sites.wick.pics/#' + r.cat.key
+    : 'https://' + (r.site ? r.site.host : 'wick.pics');
+  const name = isCat ? r.cat.label : (r.site ? r.site.name : 'wick.pics');
+  const why  = isCat ? r.cat.why : (r.site ? r.site.why : '');
+  const label = isCat ? 'BROWSE IT' : 'OPEN IT';
 
   const container = document.getElementById('survey');
   container.innerHTML = `
     <div class="final">
       <img class="character-img" src="/wick.png" alt="Green Wick" style="margin:0 auto;display:block;width:140px;height:140px;border-width:4px">
-      <h1>BUY $WICK</h1>
-      <p>Our state-of-the-art survey algorithm, powered by advanced AI, years of market research, and the alignment of the stars has determined your optimal crypto strategy:</p>
-      <p style="font-size:1.3rem;color:var(--primary);font-weight:700;margin-bottom:28px">Buy WICK on PulseChain.</p>
-      <a href="https://swap.wick.pics" target="_blank" class="buy-btn">BUY WICK NOW &#128640;</a>
+      <p style="margin-bottom:6px">Out of everything we have built, this is the one for you:</p>
+      <h1 style="margin-bottom:10px">${name}</h1>
+      <p style="font-size:1.05rem;margin-bottom:26px">${why}</p>
+      <a href="${target}" target="_blank" rel="noopener" class="buy-btn">${label} &#128640;</a>
       <br>
-      <button type="button" class="restart-link" onclick="restart()">Retake survey</button>
+      <p style="font-size:.85rem;opacity:.75;margin-top:22px">
+        There are another forty-odd. <a href="https://sites.wick.pics" target="_blank" rel="noopener"
+        style="color:var(--primary)">See the lot</a>.
+      </p>
+      <button type="button" class="restart-link" onclick="restart()">Start again</button>
     </div>
   `;
 
   launchConfetti();
 }
 
+
 function restart() {
   history = [];
+  result = null;
   currentStep = 0;
   render();
 }
